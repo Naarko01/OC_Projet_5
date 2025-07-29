@@ -23,9 +23,10 @@ const rightArrow = document.getElementById("rightArrow");
 let slideNumber = 0;
 
 createBulletPoints();
-selectActiveDot(slideNumber);
+toggleSelectedDot(slideNumber);
 
 leftArrow.addEventListener("click", () => {
+	toggleSelectedDot(slideNumber);
 	if (slideNumber === 0) {
 		slideNumber = slides.length - 1;
 	}
@@ -33,10 +34,11 @@ leftArrow.addEventListener("click", () => {
 		slideNumber--;
 	}
 	moveSlider(slideNumber);
-	selectActiveDot(slideNumber);
+	toggleSelectedDot(slideNumber);
 })
 
 rightArrow.addEventListener("click", () => {
+	toggleSelectedDot(slideNumber);
 	if (slideNumber === slides.length - 1) {
 		slideNumber = 0;
 	}
@@ -44,7 +46,7 @@ rightArrow.addEventListener("click", () => {
 		slideNumber++;
 	}
 	moveSlider(slideNumber);
-	selectActiveDot(slideNumber);
+	toggleSelectedDot(slideNumber);
 })
 
 /**
@@ -59,19 +61,11 @@ function moveSlider(index) {
 }
 
 /**
- * @param {Number} index : variable to iterate through "dot" list
+ * @param {Number} index : variable to iterate through dot list
  */
-function selectActiveDot(index) {
-	let dotList = document.querySelectorAll(".dot");
-	let className = "dot_selected";
-	//remove the class on every element for each function call
-	for (let i = 0; i < dotList.length; i++) {
-		if (dotList[i].classList.contains(className)) {
-			dotList[i].classList.remove(className);
-		}
-	}
-	//adding the class on the targeted element
-	dotList[index].classList.add(className);
+function toggleSelectedDot(index) {
+	const selectedDot = document.getElementById(`dot${index + 1}`) //+1 because .dot start to 1
+	selectedDot.classList.toggle("dot_selected");
 }
 
 /**
