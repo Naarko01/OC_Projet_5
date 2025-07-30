@@ -25,29 +25,21 @@ let slideNumber = 0;
 createBulletPoints();
 toggleSelectedDot(slideNumber);
 
-leftArrow.addEventListener("click", () => {
+function handleClick(isLeft) {
 	toggleSelectedDot(slideNumber);
-	if (slideNumber === 0) {
-		slideNumber = slides.length - 1;
+	if (isLeft) {
+		slideNumber = slideNumber === 0 ? slides.length - 1 : slideNumber - 1;
 	}
 	else {
-		slideNumber--;
+		slideNumber = slideNumber === slides.length - 1 ? 0 : slideNumber + 1;
 	}
 	moveSlider(slideNumber);
 	toggleSelectedDot(slideNumber);
-})
+}
 
-rightArrow.addEventListener("click", () => {
-	toggleSelectedDot(slideNumber);
-	if (slideNumber === slides.length - 1) {
-		slideNumber = 0;
-	}
-	else {
-		slideNumber++;
-	}
-	moveSlider(slideNumber);
-	toggleSelectedDot(slideNumber);
-})
+leftArrow.addEventListener("click", () => handleClick(true));
+
+rightArrow.addEventListener("click", () => handleClick(false));
 
 /**
  * @param {Number} index : variable to iterate through "slides" table
